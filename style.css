@@ -1,0 +1,32 @@
+
+body {
+    background-color: #000000; /* Black background */
+    color: #ffffff;            /* White text */
+    font-family: sans-serif;   /* Optional: makes the text look a bit cleaner */
+}
+
+a {
+    color: #ff3333; /* A nice bright red */
+    text-decoration: none; /* Removes the default underline */
+}
+
+a:hover {
+    color: #ffffff; /* Changes link to white on hover */
+    text-decoration: underline; 
+}
+nav {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+}
+
+nav a {
+    margin-left: 20px; 
+}
+
+img {
+    position: absolute;
+    right: 40px;
+    top: 150px; /* You can increase or decrease this number to move it up or down */
+    border-radius: 15px; /* Optional: curves the corners of your image slightly! */
+}
