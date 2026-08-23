@@ -2,7 +2,7 @@
 body {
     background-color: #000000; /* Black background */
     color: #ffffff;            /* White text */
-    font-family: sans-serif;   /* Optional: makes the text look a bit cleaner */
+    font-family: 'Poppins', sans-serif; 
 }
 
 a {
@@ -47,4 +47,18 @@ img {
     margin-bottom: 20px;
 
     width: 700px;       
+}
+section#about {
+    position: absolute;
+    left: 40px;
+    top: 300px;
+}
+main section {
+    display: none; /* Hide them all by default */
+    position: absolute;
+    top: 180px; /* Aligns them vertically below the title */
+    left: 40px; /* Aligns them with the left edge */
+}
+#home {
+    display: block; 
 }
