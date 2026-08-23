@@ -30,3 +30,21 @@ img {
     top: 150px; /* You can increase or decrease this number to move it up or down */
     border-radius: 15px; /* Optional: curves the corners of your image slightly! */
 }
+.project { 
+    /* 1. Paints the box dark grey so it stands out from the black background */
+    background-color: #1a1a1a; 
+    
+    /* 2. Adds a red border around the box */
+    border: 2px solid #ff3333; 
+    
+    /* 3. Rounds the corners of the box */
+    border-radius: 10px;       
+    
+    /* 4. Adds space INSIDE the box so the text doesn't touch the red border */
+    padding: 20px;             
+    
+    /* 5. Adds space OUTSIDE the box so the two projects don't touch each other */
+    margin-bottom: 20px;
+
+    width: 700px;       
+}
