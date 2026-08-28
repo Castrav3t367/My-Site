@@ -27,7 +27,7 @@ nav a {
     margin-left: 20px; 
 }
 
-img {
+.main-image {
     position: absolute;
     right: 40px;
     top: 150px; /* You can increase or decrease this number to move it up or down */
@@ -65,7 +65,14 @@ main section {
 #home {
     display: block; 
 }
-header#h1{
-    position:center;
-    top: 20px;
+ header h1{
+    text-align: center;
+    padding-top: 20px;
+}
+.buggame-image {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    top: 30px;
+    left: 800px;
 }
