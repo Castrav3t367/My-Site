@@ -16,11 +16,6 @@
 <body>
 
     <header>
-        <h1>Welcome to my portfolio site</h1>
-        <img class="main-image"
-        src="images/icon.png" 
-        alt="Just a picture random XD" 
-        width="700" height="500">
         <nav>
             <a href="#projects">Projects</a>
             <a href="#about">About</a>
@@ -30,6 +25,9 @@
     </header>
 
     <main>
+
+
+
 
         <section id="projects" style="top: 100px;">
             <h2>My Projects</h2>
@@ -44,25 +42,36 @@
                 <p>A 2D game I'm developing with Godot RTS style for pc and phones.</p>
                 <p>And 1 just for mobile! simple tower defence stuff </p>
             </div>
+
             <div class="project">
                 <h3>Portfolio Website</h3>
                 <p>This website you're currently on! Built with HTML, CSS, and JavaScript.</p>
             </div>
+
             <div class="project">
                 <h3>BUG SPACE INVASION</h3>
-                <img class="buggame-image"
-                src="images/BUG SPACE INVASION.png" 
-                alt="BUG SPACE INVASION" 
-                style="width: 200px; height: 200px; position: relative; top: 10px; left: 50px;">
                 <p>Tower defence game Soon Out!!</p>
+                <a onclick="showSection('bug-space-invasion')" class="btn" style="cursor: pointer;">View Game Details</a>
             </div>
+
             </div>
         </section>
         
+
+
+
+
         <section id="home"style="top: 100px;">
+              <h1>Welcome to my portfolio site</h1>
+        <img class="main-image"
+        src="images/icon.png" 
+        alt="Just a picture random XD" 
+        width="700" height="500">
            <h2>Hi, I'm Niko!</h2>
            <p>Welcome to my corner of the internet.</p>
          </section>
+
+
 
         <section id="about" style="top: 100px;">
             <h2>About Me</h2>
@@ -71,10 +80,50 @@
                 games and websites.
             </p>
         </section>
+
+
+
+
+
+
+
         <section id="contact" style="top: 100px;">
             <h3>No contact for now until it's done</h3>
         </section>
+
+
+
+
+
+
+        
+        <section id="bug-space-invasion">
+           <h2>Bug Space Invasion</h2>
+            <img src="images/BUG SPACE INVASION.png" alt="Icon" style="width: 400px; height: 300px;position:relative;left: 750px;">
+                  <!-- LEFT SIDE: Image Gallery -->
+            <div class="gallery-container">
+                <div class="gallery-images">
+                     <img src="images/defend.PNG" class="gallery-img active-img" alt="Pic 1"> 
+                     <img src="images/upgrade.PNG" class="gallery-img" alt="Pic 2">
+                     <img src="images/levels.PNG" class="gallery-img" alt="Pic 3">
+                     <img src="images/trophy room.PNG" class="gallery-img" alt="Pic 4">
+                     <img src="images/mainmenu.PNG" class="gallery-img" alt="Pic 5">
+                 </div>
+
+              <div class="gallery-controls">
+                   <button onclick="changeImage(-1)" class="btn" style="cursor: pointer;">&lt; Left</button>
+                   <button onclick="changeImage(1)" class="btn" style="cursor: pointer;">Right &gt;</button>
+              </div>
+              </div>
+          <p>Here are all the cool scripts and pictures for my tower defense game!</p>
+          <a onclick="showSection('projects')" class="btn" style="cursor: pointer;">Back to Projects</a>
+        </section>
     
+
+
+
+
+
 
     </main>
 

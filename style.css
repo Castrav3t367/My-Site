@@ -11,7 +11,7 @@ a {
 }
 
 a:hover {
-    color: #ffffff; /* Changes link to white on hover */
+    color: #ffffff; 
     text-decoration: underline; 
 }
 nav {
@@ -19,7 +19,7 @@ nav {
     top: 20px;
     right: 100px;
     width: 350px;
-    background-color: #642222; /* Dark grey background */
+    background-color: #642222; 
     border: 2px solid #ec7373;
 }
 
@@ -27,12 +27,7 @@ nav a {
     margin-left: 20px; 
 }
 
-.main-image {
-    position: absolute;
-    right: 40px;
-    top: 150px; /* You can increase or decrease this number to move it up or down */
-    border-radius: 15px; /* Optional: curves the corners of your image slightly! */
-}
+
 .project { 
     /* 1. Paints the box dark grey so it stands out from the black background */
     background-color: #1a1a1a; 
@@ -59,20 +54,84 @@ section#about {
 main section {
     display: none; /* Hide them all by default */
     position: absolute;
-    top: 180px; /* Aligns them vertically below the title */
-    left: 40px; /* Aligns them with the left edgehhhhhhhhhhhhhhhhhhhhhh */
+    top: 180px;
+    left: 40px;
 }
 #home {
     display: block; 
+    width: 90%
 }
- header h1{
+ #home h1{
     text-align: center;
     padding-top: 20px;
 }
-.buggame-image {
-    width: 100px;
-    height: 100px;
-    position: relative;
-    top: 30px;
-    left: 800px;
+#home img {
+    position: absolute;
+    left: 900px;
+    top: 150px; /* You can increase or decrease this number to move it up or down */
+    border-radius: 15px; /* Optional: curves the corners of your image slightly! */
+}
+.btn {
+    display: inline-block;
+    background-color: #ff3333;
+    color: #ffffff; 
+    padding: 10px 20px; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    margin-top: 10px; 
+    font-weight: bold;
+}
+.btn:hover {
+    background-color: #cc0000; /* A slightly darker red for the hover effect */
+}
+#bug-space-invasion a{
+    position: absolute;
+    top: -40px;
+    left: 40px;
+}
+#projects{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+#bug-space-invasion{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+#bug-space-invasion h2{
+    position: relative; 
+    top: -40px; 
+    text-align: center;
+}
+#bug-space-invasion p{
+    position: relative; 
+    top: -515px; 
+    left: 1200px;
+}
+/* Places the gallery box on the left side */
+.gallery-container {
+    position: absolute;
+    left: 40px;
+    top: 150px;
+    width: 400px; /* Makes the box exactly this wide */
+    text-align: center; /* Centers the buttons under the picture */
+}
+
+/* Hides ALL images by default and sets their size */
+.gallery-img {
+    display: none; 
+    width: 100%; /* Stretches the image to fit the 400px box perfectly */
+    border-radius: 15px;
+    border: 2px solid #ff3333;
+}
+
+/* ONLY the image with this class will show up! */
+.active-img {
+    display: block; 
+}
+
+/* Adds some space above the left/right buttons */
+.gallery-controls {
+    margin-top: 15px;
 }
