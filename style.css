@@ -84,7 +84,8 @@ main section {
 .btn:hover {
     background-color: #cc0000; /* A slightly darker red for the hover effect */
 }
-#bug-space-invasion a{
+
+#bug-space-invasion a{ /* BUGGGG GAME SCREEN STUFFFF*/
     position: absolute;
     top: -40px;
     left: 40px;
@@ -106,7 +107,7 @@ main section {
 }
 #bug-space-invasion p{
     position: relative; 
-    top: -515px; 
+    top: -1200px; 
     left: 1200px;
 }
 /* Places the gallery box on the left side */

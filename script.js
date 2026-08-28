@@ -1,3 +1,6 @@
+let currentImgIndex = 0; 
+
+
 function showSection(sectionId) {
     // 1. Hide every section first
     document.getElementById('home').style.display = 'none';
@@ -16,10 +19,6 @@ document.querySelector('a[href="#about"]').onclick = function() { showSection('a
 document.querySelector('a[href="#home"]').onclick = function() { showSection('home'); };
 document.querySelector('a[href="#contact"]').onclick = function() { showSection('contact'); };
 document.querySelector('a[href="#bug-space-invasion"]').onclick = function() { showSection('bug-space-invasion'); };
-
-
-
-let currentImgIndex = 0; 
 
 function changeImage(direction) {
     const images = document.querySelectorAll('.gallery-img');
