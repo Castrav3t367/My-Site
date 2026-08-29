@@ -17,10 +17,11 @@ a:hover {
 nav {
     position: absolute;
     top: 20px;
-    right: 100px;
+    right: 40px; 
     width: 350px;
     background-color: #642222; 
     border: 2px solid #ec7373;
+    z-index: 999; 
 }
 
 nav a {
@@ -64,11 +65,24 @@ main section {
  #home h1{
     text-align: center;
     padding-top: 20px;
+    top : -100px; 
+}
+#home h2 {
+    position: absolute;
+    left: 650px; 
+    top: 300px; 
+    font-size: 40px; 
+}
+
+#home p {
+    position: absolute;
+    left: 650px; 
+    top: 370px; 
+    font-size: 20px;
 }
 #home img {
-    position: absolute;
-    left: 900px;
-    top: 150px; /* You can increase or decrease this number to move it up or down */
+    position: relative;
+    top: 50px; /* You can increase or decrease this number to move it up or down */
     border-radius: 15px; /* Optional: curves the corners of your image slightly! */
 }
 .btn {
