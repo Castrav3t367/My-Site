@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niko | Personal Site</title>
+  <style>
+    :root {
+      --mx: 0px;
+      --my: 0px;
+      --bg-scale: 1;
+      --accent: #6366f1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: #090d16;
+      color: #f8fafc;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+   
+    .bg-container {
+      position: fixed;
+      inset: -10%;
+      z-index: -1;
+      pointer-events: none;
+      transform: translate3d(calc(var(--mx) * -0.04), calc(var(--my) * -0.04), 0) scale(var(--bg-scale));
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+    }
+
+    .bg-image {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.28;
+      filter: saturate(1.2) blur(2px);
+      transition: opacity 0.4s ease, filter 0.4s ease;
+    }
+
+    .glow-orb {
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent), transparent 70%);
+      opacity: 0.35;
+      filter: blur(60px);
+      z-index: -1;
+      pointer-events: none;
+      transform: translate3d(calc(var(--mx) * 0.08), calc(var(--my) * 0.08), 0);
+      transition: transform 0.2s ease-out, background 0.4s ease;
+    }
+
+    body.is-pressing { --bg-scale: 1.08; }
+    body.is-pressing .bg-image { opacity: 0.45; filter: saturate(2) blur(0px); }
+
+  
+    .container {
+      max-width: 880px;
+      width: 92%;
+      padding: 3.5rem 1rem;
+    }
+
+  
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+  
+    .avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+      width: 155px;
+      height: 155px;
+      border-radius: 28px;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--accent), rgba(255, 255, 255, 0.15));
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s ease;
+      cursor: pointer;
+    }
+
+    .avatar-wrapper:hover {
+      transform: scale(1.06) rotate(-3deg);
+    }
+
+    .avatar-wrapper:active {
+      transform: scale(0.95);
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+      border-radius: 24px;
+      background-color: #1e293b;
+      display: block;
+    }
+
+  
+    .hero-text h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-text .welcome {
+      font-size: clamp(1.3rem, 3vw, 1.85rem);
+      font-weight: 700;
+      background: linear-gradient(90deg, #f8fafc, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-text p.subtitle {
+      color: #94a3b8;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+  
+    @media (max-width: 640px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+      }
+    }
+
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      perspective: 1000px;
+    }
+
+    /* 3D TILT CARD */
+    .card {
+      --rx: 0deg;
+      --ry: 0deg;
+      --px: 50%;
+      --py: 50%;
+      --glare-opacity: 0;
+
+      position: relative;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      padding: 2rem;
+      border-radius: 22px;
+      cursor: pointer;
+
+      transform-style: preserve-3d;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+      transition: 
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .card.is-tilting {
+      transition: 
+        transform 0.08s ease-out,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+    }
+
+    .card:active {
+      transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(0.95);
+      transition: transform 0.1s ease;
+    }
+
+    .card-glare {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: radial-gradient(
+        350px circle at var(--px) var(--py),
+        rgba(255, 255, 255, 0.22),
+        rgba(255, 255, 255, 0.05) 40%,
+        transparent 80%
+      );
+      opacity: var(--glare-opacity);
+      transition: opacity 0.3s ease;
+      mix-blend-mode: overlay;
+    }
+
+    .card-content {
+      transform: translateZ(35px);
+      pointer-events: none;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .card p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  
+    .container {
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+    }
+
+  
+    body.page-open .container {
+      transform: scale(1.25);
+      opacity: 0;
+      pointer-events: none; 
+    }
+
+
+    .pages-wrapper {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .page-view {
+      max-width: 750px;
+      width: 90%;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      padding: 3rem;
+      border-radius: 28px;
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
+
+  
+      position: absolute;
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+    }
+
+
+    .page-view.is-active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .page-view h2 {
+      font-size: 2.5rem;
+      margin: 1.2rem 0 0.5rem;
+    }
+
+    .page-intro {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .page-box {
+      background: rgba(148, 3, 3, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 16px;
+    }
+
+    .page-box h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-box p {
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateX(-4px); 
+    }
+
+    .back-btn:active {
+      transform: scale(0.92);
+    }
+  
+    .page-view {
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+
+    .project-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .clickable-project {
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .clickable-project h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .clickable-project h3 span {
+      transition: transform 0.25s ease;
+      color: var(--accent);
+    }
+
+    .clickable-project:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-4px) scale(1.01);
+    }
+
+    .clickable-project:hover h3 span {
+      transform: translateX(6px); 
+    }
+
+    .clickable-project:active {
+      transform: scale(0.97);
+    }
+
+  
+    .game-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .game-gallery img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .game-gallery img:hover {
+      transform: scale(1.04);
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+
+  
+    .project-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .action-btn, .secondary-btn {
+      text-decoration: none;
+      padding: 0.75rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: inline-block;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+    }
+
+    .action-btn {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 10px 25px -8px var(--accent);
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .action-btn:hover, .secondary-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    .action-btn:active, .secondary-btn:active {
+      transform: scale(0.95);
+    }
+
+  
+    .back-projects-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .back-projects-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateX(-4px);
+    }
+
+    .clickable-skill {
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .clickable-skill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-4px) scale(1.01);
+    }
+
+    .clickable-skill:active {
+      transform: scale(0.97);
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-header h3 {
+      margin-bottom: 0;
+    }
+
+    .skill-percent {
+      font-weight: 700;
+      color: var(--accent);
+      transition: transform 0.25s ease;
+    }
+
+    .clickable-skill:hover .skill-percent {
+      transform: translateX(5px);
+    }
+
+
+    .skill-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+
+    .skill-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #ec4899);
+      border-radius: 999px;
+      box-shadow: 0 0 15px var(--accent);
+      transition: width 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+    }
+
+
+    .page-view.is-active .skill-bar-fill {
+      width: var(--percent);
+    }
+
+  
+    .code-block {
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 1.2rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+      color: #a5b4fc;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .back-skills-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .back-skills-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateX(-4px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-container">
+    <div class="bg-image"></div>
+  </div>
+  <div class="glow-orb"></div>
+
+  <main class="container">
+    
+    <header class="hero">
+      <div class="avatar-wrapper">
+        <img 
+          src="pictures/me.jpg" 
+          alt="Niko" 
+          class="avatar-img"
+        >
+      </div>
+
+      <div class="hero-text">
+        <h1>Hey, I'm Niko.</h1>
+        <div class="welcome">Welcome to my corner of the internet!</div>
+        <p class="subtitle">Software,Web and Game Developer</p>
+      </div>
+    </header>
+
+
+    <div class="grid">
+     <div class="card" data-color="#ec4899" data-scale="1.05" data-target="projects">
+        <div class="card-glare"></div>
+        <div class="card-content">
+          <h3>🚀 Projects</h3>
+          <p>Check out the apps, websites, and games I've designed and built from scratch.</p>
+        </div>
+      </div>
+
+      <div class="card" data-color="#10b981" data-scale="1.1" data-target="experiments">
+        <div class="card-glare"></div>
+        <div class="card-content">
+          <h3>⚡ Experiments</h3>
+          <p>Interactive code playgrounds, prototypes, and fun visual effects I'm testing out.</p>
+        </div>
+      </div>
+
+      <div class="card" data-color="#3b82f6" data-scale="1.06" data-target="about">
+        <div class="card-glare"></div>
+        <div class="card-content">
+          <h3>💡 About</h3>
+          <p>Learn more about my background, the tech stack I use, and what I'm currently learning.</p>
+        </div>
+      </div>
+
+      <div class="card" data-color="#f59e0b" data-scale="1.05" data-target="contact">
+        <div class="card-glare"></div>
+        <div class="card-content">
+          <h3>📬 Contact</h3>
+          <p>Want to collaborate or just say hi? Grab my links and socials right here.</p>
+        </div>
+      </div>
+    </div>
+
+      <div class="card" data-color="#249e0b" data-scale="1.05" data-target="skills">
+        <div class="card-glare"></div>
+        <div class="card-content">
+          <h3>⚡ Skills⚡ </h3>
+          <p>coming soon section!</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="pages-wrapper">
+    <!--PROJECT-->
+    <section class="page-view" id="projects">
+      <button class="back-btn">← Back Home</button>
+      <h2>🚀 My Projects</h2>
+      <p class="page-intro">Click on a project below to test it out, see screenshots, or download it.</p>
+
+      <div class="project-list">
+        <!-- Clickable Project 1: SortFiles Tool -->
+        <div class="page-box clickable-project" data-project="project-sortfiles">
+          <h3>📁 SortFiles Tool <span>→</span></h3>
+          <p>An automatic file organizer tool. Click to use the tool or download it.</p>
+        </div>
+
+        <!-- Clickable Project 2: My Game -->
+        <div class="page-box clickable-project" data-project="project-game">
+          <h3>🎮 BUG SPACE INVASION <span>→</span></h3>
+          <p>Check out gameplay details, screenshots, and grab the download link.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT DETAIL 1: SORTFILES TOOL -->
+    <section class="page-view" id="project-sortfiles">
+      <button class="back-projects-btn">← Back to Projects</button>
+      <h2>📁 SortFiles Tool</h2>
+      <p class="page-intro">Organize messy folders automatically by file type in one click.</p>
+
+      <!-- Interactive / Tool Area -->
+      <div class="page-box">
+        <h3>Try / Download SortFiles</h3>
+        <p>Drop your messy files into clean folders (Images, Docs, Audio, Archives) instantly.</p>
+        
+        <div class="project-actions">
+          <!-- Replace href="#" with your tool link or zip file inside your project folder -->
+          <a href="files/SortFiles.zip" download class="action-btn">⬇️ Download SortFiles</a>
+          <a href="#" target="_blank" class="secondary-btn">Here i will show you the source code</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT DETAIL 2: MY GAME -->
+    <section class="page-view" id="project-game">
+      <button class="back-projects-btn">← Back to Projects</button>
+      <h2>🎮 BUG SPACE INVASION</h2>
+      <p class="page-intro">Defend your base from bug invaders in this exciting Android game!</p>
+
+      <!-- Game Screenshots Gallery (looks in your pictures/ folder first!) -->
+      <div class="game-gallery">
+        <img 
+          src="pictures/bugspaceinvasion.png" 
+          alt="Game Screenshot 1"
+        >
+        <img 
+          src="pictures/p1.png" 
+          alt="Game Screenshot 2"
+        >
+      </div>
+
+      <!-- Game Details & Download Link -->
+      <div class="page-box">
+        <h3>About the Game</h3>
+        <p>It's an Android game built with Godot! Where you defend your base from bugs invaders.</p>
+        
+        <div class="project-actions">
+          <!-- Put your game zip/installer path in href="" -->
+          <a href="https://play.google.com/store/apps/details?id=com.JNstudio.bugspaceinvasion" target="_blank" class="action-btn">⬇️ Download Game (Android)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIMENTS PAGE -->
+    <section class="page-view" id="experiments">
+      <button class="back-btn">← Back Home</button>
+      <h2>⚡ Experiments</h2>
+      <p class="page-intro">Small prototypes in work projects!</p>
+      <div class="page-box">
+        <h3>File sorter</h3>
+        <p>A simple tool to organize files based on their extensions.</p>
+      </div>
+       <div class="page-box">
+        <h3>Sushy Tower</h3>
+        <p>A tycoon game built with Godot for android! in progress</p>
+      </div>
+      <div class="page-box">
+        <h3>A roblox game!</h3>
+        <p>I'm looking forward to finish it!</p>
+      </div>
+    </section>
+
+    <!-- ABOUT PAGE -->
+    <section class="page-view" id="about">
+      <button class="back-btn">← Back Home</button>
+      <h2>💡 About Me</h2>
+      <p class="page-intro">A quick look at who I am and what I love creating.</p>
+      <div class="page-box">
+        <h3>Hey, I'm Niko!</h3>
+        <p>Right now I study computer science 1 year LEFT!!!
+            I like to make games,working with web technologies and developing tools!
+            Scared that AI will replace humans? A bit,but I'm more confident that AI is just a tool and 
+            is more powerful when humans(someone with a background in IT!) and AI work together! 
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT PAGE -->
+    <section class="page-view" id="contact">
+      <button class="back-btn">← Back Home</button>
+      <h2>📬 Contact Me</h2>
+      <p class="page-intro">Want to team up or say hello? Reach out below.</p>
+      <div class="page-box">
+        <h3>My Links</h3>
+        <p>Discord / GitHub / Email / Instagram go here!</p>
+      </div>
+    </section>
+ <!-- insta easteregg -->
+    <section class="page-view" id="secret-insta">
+      <button class="back-btn">← Back Home</button>
+      <h2>Caught You Looking!</h2>
+      <p class="page-intro">You really like my face that much that you tapped on it? XD </p>
+      
+      <div class="page-box">
+        <h3> Here, check my Insta!</h3>
+        <p>Since you're already curious, go see the rest of my photos and drop a follow.</p>
+        
+        <div class="project-actions">
+          <a href="https://www.instagram.com/nicublanita_/" target="_blank" class="action-btn">
+            ✨ @nicublanita_ on Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+<!-- SKILLS MENU PAGE -->
+    <section class="page-view" id="skills">
+      <button class="back-btn">← Back Home</button>
+      <h2>⚡ My Skills</h2>
+      <p class="page-intro">Click on any language below to see my code snippets and GitHub repos.</p>
+
+      <div class="project-list">
+        <!-- Skill 1: C++ (75%) -->
+        <div class="page-box clickable-skill" data-skill="skill-cpp">
+          <div class="skill-header">
+            <h3>⚙️ C++</h3>
+            <span class="skill-percent">75% →</span>
+          </div>
+          <div class="skill-bar-bg">
+            <div class="skill-bar-fill" style="--percent: 75%;"></div>
+          </div>
+        </div>
+
+        <!-- Skill 2: HTML, CSS & JS (50%) -->
+        <div class="page-box clickable-skill" data-skill="skill-web">
+          <div class="skill-header">
+            <h3>🌐 HTML, CSS & JS</h3>
+            <span class="skill-percent">50% →</span>
+          </div>
+          <div class="skill-bar-bg">
+            <div class="skill-bar-fill" style="--percent: 50%;"></div>
+          </div>
+        </div>
+
+ <!-- Skill 3: Python (10%) -->
+        <div class="page-box clickable-skill" data-skill="skill-python">
+          <div class="skill-header">
+            <h3>🐍 Python</h3>
+            <span class="skill-percent">10% →</span>
+          </div>
+          <div class="skill-bar-bg">
+            <div class="skill-bar-fill" style="--percent: 10%;"></div>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+
+<!-- SKILL DETAIL 1: C++ -->
+    <section class="page-view" id="skill-cpp">
+      <button class="back-skills-btn">← Back to Skills</button>
+      <h2>⚙️ C++ (75%)</h2>
+      <p class="page-intro">My main language for algorithms, console tools, and performance code.</p>
+
+      <div class="page-box">
+        <h3>Sample Code</h3>
+        <pre class="code-block"><code>#include &lt;iostream&gt;
+
+int main() {
+    std::cout &lt;&lt; "Hello from Niko's C++ code!" &lt;&lt; std::endl;
+    return 0;
+}</code></pre>
+        <div class="project-actions">
+          <a href="https://github.com/YOUR_USERNAME" target="_blank" class="action-btn">💻 View C++ GitHub Repos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILL DETAIL 2: HTML / CSS / JS -->
+    <section class="page-view" id="skill-web">
+      <button class="back-skills-btn">← Back to Skills</button>
+      <h2>🌐 HTML, CSS & JS (50%)</h2>
+      <p class="page-intro">Building interactive, 3D animated websites like this one!</p>
+
+      <div class="page-box">
+        <h3>Sample Code</h3>
+        <pre class="code-block"><code>// Tracking mouse coordinates for 3D tilt
+window.addEventListener('mousemove', (e) =&gt; {
+  root.style.setProperty('--mx', `${e.clientX}px`);
+});</code></pre>
+        <div class="project-actions">
+          <a href="https://github.com/YOUR_USERNAME" target="_blank" class="action-btn">💻 View Web GitHub Repos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILL DETAIL PYTHON -->
+    <section class="page-view" id="skill-python">
+      <button class="back-skills-btn">← Back to Skills</button>
+      <h2>🐍 Python (10%)</h2>
+      <p class="page-intro">Currently learning the basics and writing automation scripts.</p>
+
+      <div class="page-box">
+        <h3>Sample Code</h3>
+        <pre class="code-block"><code>def greet(name):
+    return f"Hey {name}, learning Python!"
+
+print(greet("Niko"))</code></pre>
+        <div class="project-actions">
+          <a href="https://github.com/YOUR_USERNAME" target="_blank" class="action-btn">💻 View Python GitHub Repos</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <script>
+    const root = document.documentElement;
+    const cards = document.querySelectorAll('.card');
+    const MAX_TILT = 18;
+
+   
+    window.addEventListener('mousemove', (e) => {
+      const x = e.clientX - window.innerWidth / 2;
+      const y = e.clientY - window.innerHeight / 2;
+      root.style.setProperty('--mx', `${x}px`);
+      root.style.setProperty('--my', `${y}px`);
+    });
+
+    window.addEventListener('mousedown', () => document.body.classList.add('is-pressing'));
+    window.addEventListener('mouseup', () => document.body.classList.remove('is-pressing'));
+
+   
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.classList.add('is-tilting');
+        card.style.setProperty('--glare-opacity', '1');
+        root.style.setProperty('--accent', card.dataset.color);
+        root.style.setProperty('--bg-scale', card.dataset.scale);
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        
+        const px = e.clientX - rect.left;
+        const py = e.clientY - rect.top;
+
+        const percentX = (px / rect.width) - 0.5;
+        const percentY = (py / rect.height) - 0.5;
+
+        const rotateX = -(percentY * MAX_TILT * 2).toFixed(2);
+        const rotateY = (percentX * MAX_TILT * 2).toFixed(2);
+
+        card.style.setProperty('--px', `${px}px`);
+        card.style.setProperty('--py', `${py}px`);
+        card.style.setProperty('--rx', `${rotateX}deg`);
+        card.style.setProperty('--ry', `${rotateY}deg`);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('is-tilting');
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+        card.style.setProperty('--glare-opacity', '0');
+
+        root.style.setProperty('--accent', '#6366f1');
+        root.style.setProperty('--bg-scale', '1');
+      });
+    });
+
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const targetId = card.dataset.target; 
+        const targetPage = document.getElementById(targetId);
+
+        if (targetPage) {
+     
+          document.body.classList.add('page-open');
+          targetPage.classList.add('is-active');
+
+       
+          root.style.setProperty('--accent', card.dataset.color);
+          root.style.setProperty('--bg-scale', '1.15');
+        }
+      });
+    });
+
+
+    const backButtons = document.querySelectorAll('.back-btn');
+
+    backButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+      
+        document.body.classList.remove('page-open');
+
+     
+        document.querySelectorAll('.page-view').forEach(page => {
+          page.classList.remove('is-active');
+        });
+
+      
+        root.style.setProperty('--accent', '#6366f1');
+        root.style.setProperty('--bg-scale', '1');
+      });
+    });
+
+    const projectItems = document.querySelectorAll('.clickable-project');
+    const projectsMenu = document.getElementById('projects');
+
+    projectItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const targetProjectId = item.dataset.project; 
+        const targetProjectPage = document.getElementById(targetProjectId);
+
+        if (targetProjectPage) {
+        
+          projectsMenu.classList.remove('is-active');
+          targetProjectPage.classList.add('is-active');
+        }
+      });
+    });
+
+  
+    const backToProjectsBtns = document.querySelectorAll('.back-projects-btn');
+
+    backToProjectsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+  
+        document.querySelectorAll('.page-view').forEach(page => {
+          page.classList.remove('is-active');
+        });
+
+   
+        projectsMenu.classList.add('is-active');
+      });
+    });
+
+    const avatar = document.querySelector('.avatar-wrapper');
+    const instaPage = document.getElementById('secret-insta');
+
+    avatar.addEventListener('click', () => {
+
+      document.body.classList.add('page-open');
+      instaPage.classList.add('is-active');
+
+  
+      root.style.setProperty('--accent', '#e1306c');
+      root.style.setProperty('--bg-scale', '1.15');
+    });
+
+    const skillItems = document.querySelectorAll('.clickable-skill');
+    const skillsMenu = document.getElementById('skills');
+
+    skillItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const targetSkillId = item.dataset.skill; 
+        const targetSkillPage = document.getElementById(targetSkillId);
+
+        if (targetSkillPage) {
+          skillsMenu.classList.remove('is-active');
+          targetSkillPage.classList.add('is-active');
+        }
+      });
+    });
+
+   
+    const backToSkillsBtns = document.querySelectorAll('.back-skills-btn');
+
+    backToSkillsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.page-view').forEach(page => {
+          page.classList.remove('is-active');
+        });
+        skillsMenu.classList.add('is-active');
+      });
+    });
+  </script>
+</body>
+</html>
